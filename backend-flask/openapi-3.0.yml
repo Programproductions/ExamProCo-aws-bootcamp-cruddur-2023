@@ -20,6 +20,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Activity'
+    
+  /api/activities/notifications:
+    get:
+      description: 'return actuvities dor all my followers'
+      tags: 
+        - activities
+      parameters: []
+      responses:
+        '200':
+          description: returns an array of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
   /api/activities/search:
     get:
       description: 'Return a feed of activity based on a search term'
