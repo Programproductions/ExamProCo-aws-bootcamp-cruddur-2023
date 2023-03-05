@@ -1,11 +1,20 @@
 from datetime import datetime, timedelta, timezone
+from opentelemetry import trace
+
+tracer = trace.get_tracer("notifications_activities")
 class NotificationsActivities:
   def run():
-    now = datetime.now(timezone.utc).astimezone()
+    with tracer.start_as_current_span("notifications-activities-mock-data"):
+      now = datetime.now(timezone.utc).astimezone()
+      span = trace.get_current_span()
+      span.set_attribute("app.now", now.isoformat())
+    
+      
+  
     results = [{
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
       'handle':  'John Smith',
-      'message': 'Cloud is running hot!',
+      'message': 'Cloud is running cold!',
       'created_at': (now - timedelta(days=2)).isoformat(),
       'expires_at': (now + timedelta(days=5)).isoformat(),
       'likes_count': 5,
@@ -24,4 +33,6 @@ class NotificationsActivities:
     },
    
     ]
+          
+
     return results
