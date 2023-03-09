@@ -2,7 +2,7 @@ import './ConfirmationPage.css';
 import React from "react";
 import { useParams } from 'react-router-dom';
 import {ReactComponent as Logo} from '../components/svg/logo.svg';
-
+import { Link } from "react-router-dom";
 // Authenication
 import { Auth } from 'aws-amplify';
 
@@ -11,6 +11,8 @@ export default function ConfirmationPage() {
   const [code, setCode] = React.useState('');
   const [errors, setErrors] = React.useState('');
   const [codeSent, setCodeSent] = React.useState(false);
+  const [confirmed, setConfirmed] = React.useState(''); // new state variable
+
 
   const params = useParams();
 
@@ -27,6 +29,8 @@ export default function ConfirmationPage() {
       await Auth.resendSignUp(email);
       console.log('code resent successfully');
       setCodeSent(true)
+      setConfirmed(true)
+      
     } catch (err) {
       // does not return a code
       // does cognito always return english
@@ -45,18 +49,24 @@ export default function ConfirmationPage() {
     setErrors('')
     try {
       await Auth.confirmSignUp(email, code);
-      window.location.href = "/"
+      console.log(confirmed, " IS TRUE?")
+      console.log(codeSent, " IS TRUE?")
+      console.log('email is confirmed');
+      window.location.href = "/signin"
     } catch (error) {
       setErrors(error.message)
     }
     return false
   }
+  
 
   let el_errors;
   if (errors){
     el_errors = <div className='errors'>{errors}</div>;
   }
 
+ 
+  
 
   let code_button;
   if (codeSent){
