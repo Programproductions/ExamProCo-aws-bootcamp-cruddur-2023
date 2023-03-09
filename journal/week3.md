@@ -1,6 +1,6 @@
 # Week 3 — Decentralized Authentication
 
-debugged the blank page to find out I'd  missed the "A" off AMplicy
+debugged the blank page to find out I'd  missed the "A" off Amplify
 
 got all the pages working 
 
